@@ -1,6 +1,6 @@
 import AutoResponderController from './auto-responder.controller';
 import CommandsController from './commands.controller';
-import { Awaitable, Client, Intents, Message } from 'discord.js';
+import { Awaitable, Client, Intents, Message, MessageEmbed, TextChannel } from 'discord.js';
 
 export default class BotController {
 
@@ -17,7 +17,9 @@ export default class BotController {
         this.client = new Client({ intents: this.intents });
 
         this.client.on('ready', () => {
-            console.log(`${this.client?.user?.username} is Ready`);
+            if (process.env.ENV === 'prod') {
+                this._sendOnlineStatus();
+            }
         });
 
         this.login();
@@ -45,5 +47,15 @@ export default class BotController {
 
     public login = () => {
         this.client.login(process.env.DISCORDJS_BOT_TOKEN);
+    }
+
+    private _sendOnlineStatus(): void {
+
+        const embed: MessageEmbed = new MessageEmbed()
+        .setColor('#FFFFFF')
+        .setTitle('Status')
+        .setDescription(`${this.client?.user?.username} is online`);
+
+        ( this.client.channels.cache.get('957203422661210142') as TextChannel ).send({ embeds: [embed] })
     }
 }
