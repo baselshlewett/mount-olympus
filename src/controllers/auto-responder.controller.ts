@@ -59,7 +59,7 @@ export default class AutoResponderController {
         }
 
         if (content.indexOf('<@!434794221904592897>') > -1) {
-            return message.channel.send('<@!'+ author.id +'> \n https://tenor.com/view/urosch-renault-maxi-turbo-maximum-attack-gif-15183993');
+            return message.channel.send('<@!'+ author.id +'> \n https://tenor.com/view/renault-megane-renault-megane-megane-burnout-gif-20305996');
         }
     }
 
